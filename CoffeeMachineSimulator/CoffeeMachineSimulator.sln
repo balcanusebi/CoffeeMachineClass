@@ -5,7 +5,11 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoffeeMachineSimulator.UI", "CoffeeMachineSimulator.UI\CoffeeMachineSimulator.UI.csproj", "{B858C88F-1CDB-41C4-837F-D3BFD38CEAC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoffeeMachineSimulator.Sender", "CoffeeMachineSimulator.Sender\CoffeeMachineSimulator.Sender.csproj", "{E894DC46-7579-4F34-8406-9B48906B019F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoffeeMachineSimulator.Sender", "CoffeeMachineSimulator.Sender\CoffeeMachineSimulator.Sender.csproj", "{E894DC46-7579-4F34-8406-9B48906B019F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoffeeMachineSimulator.Services", "CoffeeMachineSimulator.Services\CoffeeMachineSimulator.Services.csproj", "{61457569-D8D8-4E33-9072-DB63DADE2131}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoffeeMachineSimulator.Tests", "CoffeeMachineSimulator.Tests\CoffeeMachineSimulator.Tests.csproj", "{A41C6C52-9EB7-4012-A030-6DC4F87D9C55}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{E894DC46-7579-4F34-8406-9B48906B019F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E894DC46-7579-4F34-8406-9B48906B019F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E894DC46-7579-4F34-8406-9B48906B019F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61457569-D8D8-4E33-9072-DB63DADE2131}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61457569-D8D8-4E33-9072-DB63DADE2131}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61457569-D8D8-4E33-9072-DB63DADE2131}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61457569-D8D8-4E33-9072-DB63DADE2131}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A41C6C52-9EB7-4012-A030-6DC4F87D9C55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A41C6C52-9EB7-4012-A030-6DC4F87D9C55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A41C6C52-9EB7-4012-A030-6DC4F87D9C55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A41C6C52-9EB7-4012-A030-6DC4F87D9C55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
