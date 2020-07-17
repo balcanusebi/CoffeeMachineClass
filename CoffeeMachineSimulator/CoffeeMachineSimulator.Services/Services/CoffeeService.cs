@@ -18,14 +18,27 @@ namespace CoffeeMachineSimulator.Services.Services
 
         public void AddCoffee(CoffeeModel coffeeToAdd)
         {
-            if (coffeeToAdd == null) throw new Exception("You should not add null entries!");
-
-            coffeeModels.Add(coffeeToAdd);
+            if (coffeeToAdd == null) { throw new Exception("You should not add null entries!"); }
+            foreach(CoffeeModel coffee in coffeeModels)
+            { if (coffee.Id == coffeeToAdd.Id) { throw new Exception("Already exists an entry with the same Id"); } }
+            if (!(coffeeToAdd.Id == Guid.Empty || coffeeToAdd.Name == null || coffeeToAdd.Price == 0.0f))
+            {
+                coffeeModels.Add(coffeeToAdd);
+            }
+           
         }
 
         public void DeleteCoffee(Guid coffeeId)
         {
-            throw new NotImplementedException();
+            if (coffeeId == Guid.Empty) { throw new Exception("The Id given is empty"); }
+            foreach (CoffeeModel coffee in coffeeModels)
+            {
+                if (coffee.Id == coffeeId)
+                {
+                    coffeeModels.Remove(coffee);
+                    break;
+                }
+            }
         }
 
         public List<CoffeeModel> GetCoffees()
