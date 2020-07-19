@@ -12,7 +12,7 @@ namespace CoffeeMachineSimulator.UI
         public MainWindow()
         {
             InitializeComponent();
-            var evConnString = "Endpoint=sb://coffeemachineeventhubnamespacee.servicebus.windows.net/;SharedAccessKeyName=coffeemachinepolicy;SharedAccessKey=hsVGSf/+g11UWq3e+sEzv0TOv92gxhNE8i19ixajwcg=;EntityPath=coffeemachineeventhub";
+            var evConnString = "Endpoint=sb://coffemachineeventhubns.servicebus.windows.net/;SharedAccessKeyName=coffemachinepolicy;SharedAccessKey=z/YG/0fEEgVte1nj/2dzwhKw/weEtXRcBZp3RBBlNvg=;EntityPath=coffeemachineeventhub";
             DataContext = new MainViewModel(new CoffeeMachineDataSender(evConnString));
         }
     }

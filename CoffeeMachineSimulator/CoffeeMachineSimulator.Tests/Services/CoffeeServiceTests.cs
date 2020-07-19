@@ -42,7 +42,8 @@ namespace CoffeeMachineSimulator.Tests.Services
         //TODO: Add Unit test for Remaining add cases
         public void AddExistingCoffee_Throws_NewException()
         {            
-            var coffeeadded = new CoffeeModel(); coffeeadded = coffeeService.GetCoffees()[0];
+            var coffeeadded = new CoffeeModel(); 
+            coffeeadded = coffeeService.GetCoffees()[0];
             var ex= Assert.Throws<Exception>(() => coffeeService.AddCoffee(coffeeadded));
 
             Assert.AreEqual(ex.Message, "Already exists an entry with the same Id");
@@ -52,33 +53,45 @@ namespace CoffeeMachineSimulator.Tests.Services
         public void AddEmptyFieldCoffee_Throws_NewException()
         {
             var marime = coffeeService.GetCoffees().Count;
-            var coffeeadded = new CoffeeModel(); coffeeadded.Id = Guid.NewGuid(); coffeeadded.Name = "Nume";
+            var coffeeadded = new CoffeeModel(); 
+            coffeeadded.Id = Guid.NewGuid(); 
+            coffeeadded.Name = "Nume";
             coffeeService.AddCoffee(coffeeadded);
 
             Assert.AreEqual(marime, coffeeService.GetCoffees().Count);
 
-            var coffeeadded1 = new CoffeeModel(); coffeeadded1.Id = Guid.NewGuid(); coffeeadded1.Price = 8.88f;
-            coffeeService.AddCoffee(coffeeadded1);
+
+            coffeeadded.Name = null;
+            coffeeadded.Price = 8.88f;
+            coffeeService.AddCoffee(coffeeadded);
 
             Assert.AreEqual(marime, coffeeService.GetCoffees().Count);
 
-            var coffeeadded2 = new CoffeeModel(); coffeeadded2.Name = "Nume"; coffeeadded2.Price = 8.88f;
-            coffeeService.AddCoffee(coffeeadded2);
+            coffeeadded.Id = Guid.Empty;
+            coffeeadded.Name = "Nume"; 
+            coffeeService.AddCoffee(coffeeadded);
 
             Assert.AreEqual(marime, coffeeService.GetCoffees().Count);
 
-            var coffeeadded3 = new CoffeeModel(); coffeeadded3.Id = Guid.NewGuid();
-            coffeeService.AddCoffee(coffeeadded3);
+             
+            coffeeadded.Id = Guid.NewGuid();
+            coffeeadded.Name = null;
+            coffeeadded.Price = long.MinValue;
+            coffeeService.AddCoffee(coffeeadded);
 
             Assert.AreEqual(marime, coffeeService.GetCoffees().Count);
 
-            var coffeeadded4 = new CoffeeModel(); coffeeadded4.Name = "Nume";
-            coffeeService.AddCoffee(coffeeadded4);
+            
+            coffeeadded.Name = "Nume";
+            coffeeadded.Id = Guid.Empty;
+            coffeeService.AddCoffee(coffeeadded);
 
             Assert.AreEqual(marime, coffeeService.GetCoffees().Count);
 
-            var coffeeadded5 = new CoffeeModel(); coffeeadded5.Price = 8.88f;
-            coffeeService.AddCoffee(coffeeadded5);
+
+            coffeeadded.Price = 8.88f;
+            coffeeadded.Name = null;
+            coffeeService.AddCoffee(coffeeadded);
 
             Assert.AreEqual(marime, coffeeService.GetCoffees().Count);
         }
@@ -87,11 +100,19 @@ namespace CoffeeMachineSimulator.Tests.Services
         //Todo: Add Unit test for deleting case
         public void DeleteCoffeeWithEmptyId_Throws_NewException()
         {
-            var coffeeadded = new CoffeeModel();
-            var ex = Assert.Throws<Exception>(() => coffeeService.DeleteCoffee(coffeeadded.Id));
+            var coffeetodelete = new CoffeeModel();
+            var ex = Assert.Throws<Exception>(() => coffeeService.DeleteCoffee(coffeetodelete.Id));
 
             Assert.AreEqual(ex.Message, "The Id given is empty");
         }
 
+        [Test]
+        public void DeleteCoffee_Deletes_Coffee()
+        {
+            var coffeetodelete = coffeeService.GetCoffees().First();
+
+            coffeeService.DeleteCoffee(coffeetodelete.Id);
+            Assert.IsTrue(coffeetodelete != coffeeService.GetCoffees().First());
+        }
     }
 }
