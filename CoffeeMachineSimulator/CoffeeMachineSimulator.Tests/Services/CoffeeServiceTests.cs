@@ -40,7 +40,7 @@ namespace CoffeeMachineSimulator.Tests.Services
         [Test]
 
         //TODO: Add Unit test for Remaining add cases
-        public void AddExistingCoffee_Throws_NewException()
+        public void AddAlreadyExistingCoffee_Throws_NewException()
         {            
             var coffeeadded = new CoffeeModel(); 
             coffeeadded = coffeeService.GetCoffees()[0];
@@ -50,49 +50,110 @@ namespace CoffeeMachineSimulator.Tests.Services
         }
 
         [Test]
-        public void AddEmptyFieldCoffee_Throws_NewException()
+        public void AddCoffeeWithEmptyPrice_DoesNotAddCoffee()
         {
             var marime = coffeeService.GetCoffees().Count;
-            var coffeeadded = new CoffeeModel(); 
-            coffeeadded.Id = Guid.NewGuid(); 
-            coffeeadded.Name = "Nume";
-            coffeeService.AddCoffee(coffeeadded);
-
-            Assert.AreEqual(marime, coffeeService.GetCoffees().Count);
-
-
-            coffeeadded.Name = null;
-            coffeeadded.Price = 8.88f;
-            coffeeService.AddCoffee(coffeeadded);
-
-            Assert.AreEqual(marime, coffeeService.GetCoffees().Count);
-
-            coffeeadded.Id = Guid.Empty;
-            coffeeadded.Name = "Nume"; 
-            coffeeService.AddCoffee(coffeeadded);
-
-            Assert.AreEqual(marime, coffeeService.GetCoffees().Count);
-
-             
+            var coffeeadded = new CoffeeModel();
             coffeeadded.Id = Guid.NewGuid();
-            coffeeadded.Name = null;
-            coffeeadded.Price = long.MinValue;
-            coffeeService.AddCoffee(coffeeadded);
-
-            Assert.AreEqual(marime, coffeeService.GetCoffees().Count);
-
-            
             coffeeadded.Name = "Nume";
-            coffeeadded.Id = Guid.Empty;
-            coffeeService.AddCoffee(coffeeadded);
 
+            coffeeService.AddCoffee(coffeeadded);
             Assert.AreEqual(marime, coffeeService.GetCoffees().Count);
+        }
 
+        [Test]
+        public void AddCoffeeWithEmptyName_DoesNotAddCoffee()
+        {
+            var marime = coffeeService.GetCoffees().Count;
+            var coffeeadded = new CoffeeModel();
+            coffeeadded.Id = Guid.NewGuid();
+            coffeeadded.Price = long.MaxValue;
 
-            coffeeadded.Price = 8.88f;
-            coffeeadded.Name = null;
             coffeeService.AddCoffee(coffeeadded);
+            Assert.AreEqual(marime, coffeeService.GetCoffees().Count);
+        }
 
+        [Test]
+        public void AddCoffeeWithEmptyId_DoesNotAddCoffee()
+        {
+            var marime = coffeeService.GetCoffees().Count;
+            var coffeeadded = new CoffeeModel();
+            coffeeadded.Name = "Nume";
+            coffeeadded.Price = long.MaxValue;
+            
+            coffeeService.AddCoffee(coffeeadded);
+            Assert.AreEqual(marime, coffeeService.GetCoffees().Count);
+        }
+
+        [Test]
+        public void AddCoffeeWithEmptyNameAndEmptyPrice_DoesNotAddCoffee()
+        {
+            var marime = coffeeService.GetCoffees().Count;
+            var coffeeadded = new CoffeeModel();
+            coffeeadded.Id = Guid.NewGuid();
+
+            coffeeService.AddCoffee(coffeeadded);
+            Assert.AreEqual(marime, coffeeService.GetCoffees().Count);
+        }
+
+        [Test]
+        public void AddCoffeeWithEmptyIdAndEmptyPrice_DoesNotAddCoffee()
+        {
+            var marime = coffeeService.GetCoffees().Count;
+            var coffeeadded = new CoffeeModel();
+            coffeeadded.Name = "Nume";
+
+            coffeeService.AddCoffee(coffeeadded);
+            Assert.AreEqual(marime, coffeeService.GetCoffees().Count);
+        }
+
+        [Test]
+        public void AddCoffeeWithEmptyIdAndEmptyName_DoesNotAddCoffee()
+        {
+            var marime = coffeeService.GetCoffees().Count;
+            var coffeeadded = new CoffeeModel();
+            coffeeadded.Price = long.MaxValue;
+
+            coffeeService.AddCoffee(coffeeadded);
+            Assert.AreEqual(marime, coffeeService.GetCoffees().Count);
+        }
+
+        [Test]
+        public void AddCoffeeWithExistingName_DoesNotAddNewCoffee()
+        {
+            var marime = coffeeService.GetCoffees().Count;
+            var coffeeadded = new CoffeeModel();
+            coffeeadded.Name = coffeeService.GetCoffees()[0].Name;
+            coffeeadded.Id = Guid.NewGuid();
+            coffeeadded.Price = long.MaxValue;
+
+            coffeeService.AddCoffee(coffeeadded);
+            Assert.AreEqual(marime, coffeeService.GetCoffees().Count);
+        }
+
+        [Test]
+        public void AddCoffeeWithExistingId_DoesNotAddNewCoffee()
+        {
+            var marime = coffeeService.GetCoffees().Count;
+            var coffeeadded = new CoffeeModel();
+            coffeeadded.Id = coffeeService.GetCoffees()[0].Id;
+            coffeeadded.Name = "Nume";
+            coffeeadded.Price = long.MaxValue;
+
+            coffeeService.AddCoffee(coffeeadded);
+            Assert.AreEqual(marime, coffeeService.GetCoffees().Count);
+        }
+
+        [Test]
+        public void AddCoffeeWithExistingPrice_DoesNotAddNewCoffee()
+        {
+            var marime = coffeeService.GetCoffees().Count;
+            var coffeeadded = new CoffeeModel();
+            coffeeadded.Price = coffeeService.GetCoffees()[0].Price;
+            coffeeadded.Name = "Nume";
+            coffeeadded.Id = Guid.NewGuid();
+
+            coffeeService.AddCoffee(coffeeadded);
             Assert.AreEqual(marime, coffeeService.GetCoffees().Count);
         }
 
