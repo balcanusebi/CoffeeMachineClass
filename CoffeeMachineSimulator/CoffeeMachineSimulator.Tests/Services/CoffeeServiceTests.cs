@@ -71,7 +71,66 @@ namespace CoffeeMachineSimulator.Tests.Services
             Assert.AreEqual(CoffeeLenghtList, coffeeService.GetCoffees().Count);
         }
 
-        //Todo: Add Unit test for deleting case
+        [Test]
+        public void AddCoffee_ExistingCoffee_ThrowsException()
+        {
+            
+            var AddCoffeeDetails = coffeeService.GetCoffees()[0];
+
+            var ex = Assert.Throws<Exception>(() => coffeeService.AddCoffee(AddCoffeeDetails));
+            Assert.AreEqual(ex.Message, "Already exists an entry with the same Id");
+
+
+        }
+
+        [Test]
+        public void AddCoffee_ExistingCoffeePrice_DoesNotAddCoffee()
+        {
+            var CoffeeLenghtList = coffeeService.GetCoffees().Count;
+            var AddCoffeeDetails = new CoffeeModel();
+
+            AddCoffeeDetails.Name = "hipoooo";
+            AddCoffeeDetails.Id = Guid.NewGuid();
+            AddCoffeeDetails.Price = coffeeService.GetCoffees()[0].Price;
+
+            Assert.AreEqual(CoffeeLenghtList, coffeeService.GetCoffees().Count);
+        }
+
+        [Test]
+        public void AddCoffee_ExistingCoffeeName_DoesNotAddCoffee()
+        {
+            var CoffeeLenghtList = coffeeService.GetCoffees().Count;
+            var AddCoffeeDetails = new CoffeeModel();
+
+            AddCoffeeDetails.Name = coffeeService.GetCoffees()[0].Name;
+            AddCoffeeDetails.Id = Guid.NewGuid();
+            AddCoffeeDetails.Price = 15.58f;
+
+            Assert.AreEqual(CoffeeLenghtList, coffeeService.GetCoffees().Count);
+        }
+
+        [Test]
+        public void AddCoffee_ExistingCoffeeId_DoesNotAddCoffee()
+        {
+            var CoffeeLenghtList = coffeeService.GetCoffees().Count;
+            var AddCoffeeDetails = new CoffeeModel();
+
+            AddCoffeeDetails.Name = "malamala";
+            AddCoffeeDetails.Id = coffeeService.GetCoffees()[0].Id;
+            AddCoffeeDetails.Price = 15.58f;
+
+            Assert.AreEqual(CoffeeLenghtList, coffeeService.GetCoffees().Count);
+        }
+
+            //Todo: Add Unit test for deleting case
+            [Test]
+        public void DeleteCoffeeWithEmptyId_Throws_NewException()
+        {
+            var coffeeToDelete = new CoffeeModel();
+            var ex = Assert.Throws<Exception>(() => coffeeService.DeleteCoffee(coffeeToDelete.Id));
+
+            Assert.AreEqual(ex.Message, "The Id given is empty");
+        }
         [Test]
         public void DeletedCoffee()
         {
