@@ -36,49 +36,49 @@ namespace CoffeeMachineSimulator.Tests.Services
             
             Assert.AreEqual(ex.Message, "You should not add null entries!");
         }
-        
-        [Test]
+
         //TODO: Add Unit test for Remaining add cases
+        [Test]
         public void AddCoffeWithoutPrice_DoesNotAddCoffee()
         {
-            var LengthList = coffeeService.GetCoffees().Count;
+            var CoffeeLenghtList = coffeeService.GetCoffees().Count;
             var AddCoffeeDetails = new CoffeeModel();
             AddCoffeeDetails.Id = Guid.NewGuid();
             AddCoffeeDetails.Name = "Your coffe name";
             coffeeService.AddCoffee(AddCoffeeDetails);
-            Assert.AreEqual(LengthList, coffeeService.GetCoffees().Count);
-
+            Assert.AreEqual(CoffeeLenghtList, coffeeService.GetCoffees().Count);
         }
+
         [Test]
         public void AddCoffeWithoutName_DoesNotAddCoffee()
         {
-            var LengthList = coffeeService.GetCoffees().Count;
+            var CoffeeLenghtList = coffeeService.GetCoffees().Count;
             var AddCoffeeDetails = new CoffeeModel();
             AddCoffeeDetails.Id = Guid.NewGuid();
             AddCoffeeDetails.Price = 10.68f;
             coffeeService.AddCoffee(AddCoffeeDetails);
-            Assert.AreEqual(LengthList, coffeeService.GetCoffees().Count);
-
+            Assert.AreEqual(CoffeeLenghtList, coffeeService.GetCoffees().Count);
         }
+
         [Test]
         public void AddCoffeWithoutId_DoesNotAddCoffee()
         {
-            var LengthList = coffeeService.GetCoffees().Count;
+            var CoffeeLenghtList = coffeeService.GetCoffees().Count;
             var AddCoffeeDetails = new CoffeeModel();
             AddCoffeeDetails.Name = "Your coffe name";
             AddCoffeeDetails.Price = 22.20f;
             coffeeService.AddCoffee(AddCoffeeDetails);
-            Assert.AreEqual(LengthList, coffeeService.GetCoffees().Count);
-
+            Assert.AreEqual(CoffeeLenghtList, coffeeService.GetCoffees().Count);
         }
 
-        [Test]
         //Todo: Add Unit test for deleting case
+        [Test]
         public void DeletedCoffee()
         {
             var deletedcoffee = coffeeService.GetCoffees().First();
 
             coffeeService.DeleteCoffee(deletedcoffee.Id);
+
             Assert.IsTrue(deletedcoffee != coffeeService.GetCoffees().First());
         }
     }

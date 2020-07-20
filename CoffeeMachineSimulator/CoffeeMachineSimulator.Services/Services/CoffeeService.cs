@@ -30,7 +30,6 @@ namespace CoffeeMachineSimulator.Services.Services
         {
             if(coffeeId == Guid.Empty) throw new Exception("The Id given is empty");
             coffeeModels.Remove(coffeeModels.First(i => i.Id == coffeeId));
-
         }
 
         public List<CoffeeModel> GetCoffees()
