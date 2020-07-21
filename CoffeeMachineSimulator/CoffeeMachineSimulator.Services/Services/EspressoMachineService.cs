@@ -17,13 +17,19 @@ namespace CoffeeMachineSimulator.Services.Services
 
         public float GetSumOfAllCoffees()
         {
-            throw new System.NotImplementedException();
+            float sumOfAllPrices= 0f;
+            var coffees = coffeeService.GetCoffees();
+
+            foreach(CoffeeModel i in coffees)
+            { 
+                sumOfAllPrices += i.Price; 
+            }
+            return sumOfAllPrices;
         }
 
         public CoffeeModel GiveMeACoffee(SweetnessEnum sweetness)
         {
             var listOfCoffees = coffeeService.GetCoffees();
-
             var myCoffeeToReturn = listOfCoffees.FirstOrDefault(x=>x.Sweetness == sweetness);
             myCoffeeToReturn.Name = "TestMyCoffee";
 
@@ -32,7 +38,13 @@ namespace CoffeeMachineSimulator.Services.Services
 
         public List<CoffeeModel> MakeAllCoffeesWithSweetness(SweetnessEnum sweetness)
         {
-            throw new System.NotImplementedException();
+            var listOfCoffees = coffeeService.GetCoffees();
+
+            foreach (CoffeeModel i in listOfCoffees)
+            {
+                i.Sweetness = sweetness;
+            }
+            return listOfCoffees;
         }
     }
 }
