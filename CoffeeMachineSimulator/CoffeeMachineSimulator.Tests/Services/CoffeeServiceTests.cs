@@ -1,5 +1,6 @@
 ﻿using CoffeeMachineSimulator.Services.Models;
 using CoffeeMachineSimulator.Services.Services;
+using FizzWare.NBuilder;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -38,142 +39,44 @@ namespace CoffeeMachineSimulator.Tests.Services
         }
 
         [Test]
-
-        //TODO: Add Unit test for Remaining add cases
-        public void AddAlreadyExistingCoffee_Throws_NewException()
-        {            
-            var coffeeAdded = new CoffeeModel(); 
-            coffeeAdded = coffeeService.GetCoffees()[0];
-            var ex= Assert.Throws<Exception>(() => coffeeService.AddCoffee(coffeeAdded));
-
-            Assert.AreEqual(ex.Message, "Already exists an entry with the same Id");
-        }
-
-        [Test]
-        public void AddCoffeeWithEmptyPrice_DoesNotAddCoffee()
+        public void AddInvalidCoffee_Throws_NewException()
         {
-            var initialSize = coffeeService.GetCoffees().Count;
-            var coffeeAdded = new CoffeeModel();
-            coffeeAdded.Id = Guid.NewGuid();
-            coffeeAdded.Name = "Nume";
+            var coffeeToAdd = Builder<CoffeeModel>.CreateNew()
+                                .With(x => x.Id = Guid.Empty)
+                                .With(x => x.Name = "")
+                                .With(x=>x.Price = 0.0f)
+                                .Build();
 
-            coffeeService.AddCoffee(coffeeAdded);
-            Assert.AreEqual(initialSize, coffeeService.GetCoffees().Count);
+            var ex = Assert.Throws<Exception>(() => coffeeService.AddCoffee(coffeeToAdd));
+
+            Assert.AreEqual(ex.Message, "The coffee you are trying to add is not valid");
         }
 
         [Test]
-        public void AddCoffeeWithEmptyName_DoesNotAddCoffee()
-        {
-            var initialSize = coffeeService.GetCoffees().Count;
-            var coffeeAdded = new CoffeeModel();
-            coffeeAdded.Id = Guid.NewGuid();
-            coffeeAdded.Price = long.MaxValue;
-
-            coffeeService.AddCoffee(coffeeAdded);
-            Assert.AreEqual(initialSize, coffeeService.GetCoffees().Count);
-        }
-
-        [Test]
-        public void AddCoffeeWithEmptyId_DoesNotAddCoffee()
-        {
-            var initialSize = coffeeService.GetCoffees().Count;
-            var coffeeAdded = new CoffeeModel();
-            coffeeAdded.Name = "Nume";
-            coffeeAdded.Price = long.MaxValue;
-            
-            coffeeService.AddCoffee(coffeeAdded);
-            Assert.AreEqual(initialSize, coffeeService.GetCoffees().Count);
-        }
-
-        [Test]
-        public void AddCoffeeWithEmptyNameAndEmptyPrice_DoesNotAddCoffee()
-        {
-            var initialSize = coffeeService.GetCoffees().Count;
-            var coffeeAdded = new CoffeeModel();
-            coffeeAdded.Id = Guid.NewGuid();
-
-            coffeeService.AddCoffee(coffeeAdded);
-            Assert.AreEqual(initialSize, coffeeService.GetCoffees().Count);
-        }
-
-        [Test]
-        public void AddCoffeeWithEmptyIdAndEmptyPrice_DoesNotAddCoffee()
-        {
-            var intialSize = coffeeService.GetCoffees().Count;
-            var coffeeAdded = new CoffeeModel();
-            coffeeAdded.Name = "Nume";
-
-            coffeeService.AddCoffee(coffeeAdded);
-            Assert.AreEqual(intialSize, coffeeService.GetCoffees().Count);
-        }
-
-        [Test]
-        public void AddCoffeeWithEmptyIdAndEmptyName_DoesNotAddCoffee()
-        {
-            var initialSize = coffeeService.GetCoffees().Count;
-            var coffeeAdded = new CoffeeModel();
-            coffeeAdded.Price = long.MaxValue;
-
-            coffeeService.AddCoffee(coffeeAdded);
-            Assert.AreEqual(initialSize, coffeeService.GetCoffees().Count);
-        }
-
-        [Test]
-        public void AddCoffeeWithExistingName_DoesNotAddNewCoffee()
-        {
-            var initialSize = coffeeService.GetCoffees().Count;
-            var coffeeAdded = new CoffeeModel();
-            coffeeAdded.Name = coffeeService.GetCoffees()[0].Name;
-            coffeeAdded.Id = Guid.NewGuid();
-            coffeeAdded.Price = long.MaxValue;
-
-            coffeeService.AddCoffee(coffeeAdded);
-            Assert.AreEqual(initialSize, coffeeService.GetCoffees().Count);
-        }
-
-        [Test]
-        public void AddCoffeeWithExistingId_DoesNotAddNewCoffee()
-        {
-            var initialSize = coffeeService.GetCoffees().Count;
-            var coffeeAdded = new CoffeeModel();
-            coffeeAdded.Id = coffeeService.GetCoffees()[0].Id;
-            coffeeAdded.Name = "Nume";
-            coffeeAdded.Price = long.MaxValue;
-
-            coffeeService.AddCoffee(coffeeAdded);
-            Assert.AreEqual(initialSize, coffeeService.GetCoffees().Count);
-        }
-
-        [Test]
-        public void AddCoffeeWithExistingPrice_DoesNotAddNewCoffee()
-        {
-            var initialSize = coffeeService.GetCoffees().Count;
-            var coffeeAdded = new CoffeeModel();
-            coffeeAdded.Price = coffeeService.GetCoffees()[0].Price;
-            coffeeAdded.Name = "Nume";
-            coffeeAdded.Id = Guid.NewGuid();
-
-            coffeeService.AddCoffee(coffeeAdded);
-            Assert.AreEqual(initialSize, coffeeService.GetCoffees().Count);
-        }
-
-        [Test]
-        //Todo: Add Unit test for deleting case
         public void DeleteCoffeeWithEmptyId_Throws_NewException()
         {
-            var coffeeToDelete = new CoffeeModel();
-            var ex = Assert.Throws<Exception>(() => coffeeService.DeleteCoffee(coffeeToDelete.Id));
+            var ex = Assert.Throws<Exception>(() => coffeeService.DeleteCoffee(Guid.Empty));
 
-            Assert.AreEqual(ex.Message, "The Id given is empty");
+            Assert.AreEqual(ex.Message, "Please provide an ID!");
         }
 
         [Test]
-        public void DeleteCoffee_Deletes_Coffee()
+        public void DeleteCoffeeWithNonExistingId_Throws_NewException()
         {
-            var coffeeToDelete = coffeeService.GetCoffees().First();
+            var ex = Assert.Throws<Exception>(() => coffeeService.DeleteCoffee(Guid.NewGuid()));
 
-            coffeeService.DeleteCoffee(coffeeToDelete.Id);
-            Assert.IsTrue(coffeeToDelete != coffeeService.GetCoffees().First());
+            Assert.AreEqual(ex.Message, "The coffee you are trying to delete does not exist!");
+        }
+
+        [Test]
+        public void DeleteCoffee_DeletesCoffee()
+        {
+            var initialCountOfCoffees = coffeeService.GetCoffees().Count;
+            var coffeeToRemove = coffeeService.GetCoffees().First();
+
+            coffeeService.DeleteCoffee(coffeeToRemove.Id);
+
+            Assert.AreNotEqual(initialCountOfCoffees, coffeeService.GetCoffees().Count);
         }
     }
 }

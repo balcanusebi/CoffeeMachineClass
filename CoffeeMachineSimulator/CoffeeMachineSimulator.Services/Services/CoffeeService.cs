@@ -13,27 +13,39 @@ namespace CoffeeMachineSimulator.Services.Services
 
         public CoffeeService()
         {
-            coffeeModels = Builder<CoffeeModel>.CreateListOfSize(10).Build().ToList();
+            coffeeModels = Builder<CoffeeModel>.CreateListOfSize(10)
+                .TheFirst(1)
+                .With(x=>x.Name = "Lavazza")
+                .Build()
+                .ToList();
         }
 
         public void AddCoffee(CoffeeModel coffeeToAdd)
         {
-            if (coffeeToAdd == null)  throw new Exception("You should not add null entries!"); 
-            if (coffeeModels.Any(i=> i== coffeeToAdd)) throw new Exception("Already exists an entry with the same Id");
-            if (!(coffeeToAdd.Id == Guid.Empty || coffeeToAdd.Name == null || coffeeToAdd.Price <= 0.0f || coffeeModels.Any(i =>i.Name==coffeeToAdd.Name) || coffeeModels.Any(j => j.Id == coffeeToAdd.Id) || coffeeModels.Any(k => k.Price == coffeeToAdd.Price)))
+            if (coffeeToAdd == null) throw new Exception("You should not add null entries!");
+            if (!IsCoffeeValid(coffeeToAdd)) throw new Exception("The coffee you are trying to add is not valid");
+
             coffeeModels.Add(coffeeToAdd);
-           
         }
 
         public void DeleteCoffee(Guid coffeeId)
         {
-            if (coffeeId == Guid.Empty) throw new Exception("The Id given is empty");
-            coffeeModels.Remove(coffeeModels.First(i => i.Id == coffeeId));
+            if(coffeeId == Guid.Empty || coffeeId == null) throw new Exception("Please provide an ID!");
+
+            var coffeeFromList = coffeeModels.FirstOrDefault(x => x.Id == coffeeId);
+            if (coffeeFromList == null) throw new Exception("The coffee you are trying to delete does not exist!");
+
+            coffeeModels.Remove(coffeeFromList);
         }
 
         public List<CoffeeModel> GetCoffees()
         {
             return coffeeModels;
+        }
+
+        private bool IsCoffeeValid(CoffeeModel model)
+        {
+            return model.Id != Guid.Empty && !string.IsNullOrEmpty(model.Name) && model.Price != 0.0f;
         }
     }
 }
