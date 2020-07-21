@@ -42,5 +42,23 @@ namespace CoffeeMachineSimulator.Tests.Services
                     .Build()
                     .ToList();
         }
+        [Test]
+        public void GetSumOfAllCoffeesPrice_ReturnsAllCoffeesPrice()
+        {
+            mockedCoffeeService.Setup(x => x.GetCoffees()).Returns(GetMockedCoffeeModels());
+            var serviceCoffees = new EspressoMachineService(mockedCoffeeService.Object);
+
+            Assert.IsNotNull(serviceCoffees.GetSumOfAllCoffeesPrice());
+        }
+
+        [Test]
+        public void MakeAllCoffeesWithSweetness_ReturnsAllCoffeeWithSueetness()
+        {
+            mockedCoffeeService.Setup(x => x.GetCoffees()).Returns(GetMockedCoffeeModels());
+            var serviceCoffees = new EspressoMachineService(mockedCoffeeService.Object);
+            var coffeesSweetness = serviceCoffees.MakeAllCoffeesWithSweetness(SweetnessEnum.LessSweet);
+
+            Assert.IsNotNull(coffeesSweetness);
+        }
     }
 }
