@@ -32,6 +32,26 @@ namespace CoffeeMachineSimulator.Tests.Services
             Assert.AreEqual(SweetnessEnum.Sweet, returnedCoffee.Sweetness);
         }
 
+        [Test]
+        public void GetSumOfAllCoffees_ReturnsSum()
+        {
+            mockedCoffeeService.Setup(x => x.GetCoffees()).Returns(GetMockedCoffeeModels());
+            var service = new EspressoMachineService(mockedCoffeeService.Object);
+
+            Assert.NotZero(service.GetSumOfAllCoffees());
+            Assert.Positive(service.GetSumOfAllCoffees());
+        }
+
+        [Test]
+        public void MakeAllCoffeesWithSweetness_MakesAllCoffeesWithSentSweetness()
+        {
+            mockedCoffeeService.Setup(x => x.GetCoffees()).Returns(GetMockedCoffeeModels());
+            var service = new EspressoMachineService(mockedCoffeeService.Object);
+
+            var coffees=service.MakeAllCoffeesWithSweetness(SweetnessEnum.Bitter);
+
+            Assert.IsTrue(coffees.All(i => i.Sweetness == SweetnessEnum.Bitter));
+        }
         private List<CoffeeModel> GetMockedCoffeeModels()
         {
             return Builder<CoffeeModel>.CreateListOfSize(10)
