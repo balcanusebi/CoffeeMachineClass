@@ -9,5 +9,6 @@ namespace CoffeeMachineSimulator.Services.Models
         public string Name { get; set; }
         public SweetnessEnum Sweetness { get; set; }
         public float Price { get; set; }
+        public EspressoMachineModel EspressoMachine { get; set; }
     }
 }

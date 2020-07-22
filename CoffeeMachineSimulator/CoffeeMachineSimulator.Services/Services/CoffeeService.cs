@@ -15,7 +15,8 @@ namespace CoffeeMachineSimulator.Services.Services
         {
             coffeeModels = Builder<CoffeeModel>.CreateListOfSize(10)
                 .TheFirst(1)
-                .With(x=>x.Name = "Lavazza")
+                    .With(x=>x.Name = "Lavazza")
+                    .With(x=>x.EspressoMachine = GenerateNewEspressoMachine("espresso machine name"))
                 .Build()
                 .ToList();
         }
