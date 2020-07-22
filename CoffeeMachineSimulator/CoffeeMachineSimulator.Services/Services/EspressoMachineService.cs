@@ -17,14 +17,9 @@ namespace CoffeeMachineSimulator.Services.Services
 
         public float GetSumOfAllCoffees()
         {
-            float sumOfAllPrices= 0f;
             var coffees = coffeeService.GetCoffees();
 
-            foreach(CoffeeModel i in coffees)
-            { 
-                sumOfAllPrices += i.Price; 
-            }
-            return sumOfAllPrices;
+            return coffees.Sum(i=>i.Price);
         }
 
         public CoffeeModel GiveMeACoffee(SweetnessEnum sweetness)
@@ -40,9 +35,9 @@ namespace CoffeeMachineSimulator.Services.Services
         {
             var listOfCoffees = coffeeService.GetCoffees();
 
-            foreach (CoffeeModel i in listOfCoffees)
+            foreach (CoffeeModel coffeeModel in listOfCoffees)
             {
-                i.Sweetness = sweetness;
+                coffeeModel.Sweetness = sweetness;
             }
             return listOfCoffees;
         }
