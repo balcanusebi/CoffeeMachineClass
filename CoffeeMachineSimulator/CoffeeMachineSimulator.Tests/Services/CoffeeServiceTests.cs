@@ -1,6 +1,9 @@
-﻿using CoffeeMachineSimulator.Services.Models;
+﻿using AutoMapper;
+using CoffeeMachineSimulator.Data;
+using CoffeeMachineSimulator.Services.Models;
 using CoffeeMachineSimulator.Services.Services;
 using FizzWare.NBuilder;
+using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -11,12 +14,17 @@ namespace CoffeeMachineSimulator.Tests.Services
     [TestFixture]
     public class CoffeeServiceTests
     {
+        //private Mock<ICoffeeContext> coffeeContextMock;
+        private Mock<IMapper> mapperMock;
         private CoffeeService coffeeService;
 
         [SetUp]
         public void SetUp()
         {
-            coffeeService = new CoffeeService();
+            //coffeeContextMock = new Mock<ICoffeeContext>();
+            mapperMock = new Mock<IMapper>();
+
+            coffeeService = new CoffeeService(mapperMock.Object);
         }
 
         [Test]

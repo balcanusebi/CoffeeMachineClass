@@ -12,11 +12,11 @@ namespace CoffeeMachineSimulator.Implementation.Sender
     public class CoffeeMachineDataSender : ICoffeMachineDataSender
     {
         private EventHubClient _ehClient;
+        private readonly string evConnString = "Endpoint=sb://coffemachineeventhubns.servicebus.windows.net/;SharedAccessKeyName=coffemachinepolicy;SharedAccessKey=z/YG/0fEEgVte1nj/2dzwhKw/weEtXRcBZp3RBBlNvg=;EntityPath=coffeemachineeventhub";
 
-        public CoffeeMachineDataSender(string ehConnString)
+        public CoffeeMachineDataSender()
         {
-            _ehClient = EventHubClient.CreateFromConnectionString(ehConnString);
-
+            _ehClient = EventHubClient.CreateFromConnectionString(evConnString);
         }
 
         public async Task SendDataAsync(CoffeeMachineData data)
