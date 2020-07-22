@@ -7,7 +7,7 @@ namespace CoffeeMachineSimulator.Services.Interfaces
     public interface IEspressoMachineService
     {
         CoffeeModel GiveMeACoffee(SweetnessEnum sweetness);
-        float GetSumOfAllCoffees();
+        float GetSumOfAllCoffeesPrice();
         List<CoffeeModel> MakeAllCoffeesWithSweetness(SweetnessEnum sweetness);
     }
 }
