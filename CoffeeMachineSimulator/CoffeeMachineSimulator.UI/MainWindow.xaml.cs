@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using CoffeeMachineSimulator.UI.ViewModel;
+using System.Windows;
 
 namespace CoffeeMachineSimulator.UI
 {
@@ -7,6 +8,11 @@ namespace CoffeeMachineSimulator.UI
     /// </summary>
     public partial class MainWindow : Window
     {
+        public MainWindow(MainViewModel model) : this()
+        {
+            DataContext = model;
+        }
+
         public MainWindow()
         {
             InitializeComponent();

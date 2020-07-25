@@ -1,38 +1,52 @@
-﻿using CoffeeMachineSimulator.Services.Enums;
+﻿using CoffeeMachineSimulator.Data;
+using CoffeeMachineSimulator.Data.Entities;
 using CoffeeMachineSimulator.Services.Interfaces;
-using CoffeeMachineSimulator.Services.Models;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
 
 namespace CoffeeMachineSimulator.Services.Services
 {
     public class EspressoMachineService : IEspressoMachineService
     {
-        public ICoffeeService coffeeService;
+        private readonly CoffeeContext coffeeContext;
 
-        public EspressoMachineService(ICoffeeService coffeeService)
+        public EspressoMachineService(CoffeeContext coffeeContext)
         {
-            this.coffeeService = coffeeService;
+            this.coffeeContext = coffeeContext;
         }
 
-        public float GetSumOfAllCoffees()
+        public void AddEspressoMachine(EspressoMachineEntity espressoMachine)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrEmpty(espressoMachine.Name)) throw new Exception("Name cannot be empty");
+
+            coffeeContext.EspressoMachines.Add(espressoMachine);
+            coffeeContext.SaveChanges();
         }
 
-        public CoffeeModel GiveMeACoffee(SweetnessEnum sweetness)
+        public async Task<EspressoMachineEntity> GetEspressoMachine(bool isEspressoMachine)
         {
-            var listOfCoffees = coffeeService.GetCoffees();
+            var espressoMachineToReturn = await coffeeContext.EspressoMachines.FirstOrDefaultAsync(x => x.IsEspressor == isEspressoMachine);
 
-            var myCoffeeToReturn = listOfCoffees.FirstOrDefault(x=>x.Sweetness == sweetness);
-            myCoffeeToReturn.Name = "TestMyCoffee";
+            if (espressoMachineToReturn != null) return espressoMachineToReturn;
 
-            return myCoffeeToReturn;
+            var espressorMachineToAdd = GetNewEspressoMachine(isEspressoMachine);
+            await coffeeContext.EspressoMachines.AddAsync(espressorMachineToAdd);
+            await coffeeContext.SaveChangesAsync();
+
+            return espressorMachineToAdd;
         }
 
-        public List<CoffeeModel> MakeAllCoffeesWithSweetness(SweetnessEnum sweetness)
+        private EspressoMachineEntity GetNewEspressoMachine(bool isEspressoMachine)
         {
-            throw new System.NotImplementedException();
+            var espressoMachineToReturn = new EspressoMachineEntity { IsEspressor = isEspressoMachine };
+
+            if (isEspressoMachine == true)
+                espressoMachineToReturn.Name = "Espressor";
+            else
+                espressoMachineToReturn.Name = "Coffee Machine";
+
+            return espressoMachineToReturn;
         }
     }
 }

@@ -10,6 +10,7 @@ using AutoMapper;
 using CoffeeMachineSimulator.UI.ViewModel;
 using CoffeeMachineSimulator.Implementation.Sender;
 using CoffeeMachineSimulator.Interfaces.Sender;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeMachineSimulator.UI
 {
@@ -22,8 +23,7 @@ namespace CoffeeMachineSimulator.UI
         protected override void OnStartup(StartupEventArgs e)
         {
             var builder = new ConfigurationBuilder()
-             .SetBasePath(Directory.GetCurrentDirectory())
-             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+             .SetBasePath(Directory.GetCurrentDirectory());
 
             Configuration = builder.Build();
 
@@ -32,15 +32,20 @@ namespace CoffeeMachineSimulator.UI
 
             ServiceProvider = serviceCollection.BuildServiceProvider();
             var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
-            mainWindow.DataContext = ServiceProvider.GetRequiredService<MainViewModel>();
+            mainWindow.Show();
         }
 
         private void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<CoffeeContext>
+                (options => options.UseSqlServer("Server=DESKTOP-FCS0D3H\\SBALCANU;Integrated Security=true; Database=CofeeDb;Trusted_Connection=True;MultipleActiveResultSets=true"));
+            
             services.AddTransient(typeof(MainWindow));
-            services.AddScoped<MainViewModel>();
+            services.AddSingleton<MainViewModel>();
+
             services.AddScoped<ICoffeeService, CoffeeService>();
             services.AddScoped<ICoffeMachineDataSender, CoffeeMachineDataSender>();
+            services.AddScoped<IEspressoMachineService, EspressoMachineService>();
 
             services.AddAutoMapper(GetType().Assembly);
         }

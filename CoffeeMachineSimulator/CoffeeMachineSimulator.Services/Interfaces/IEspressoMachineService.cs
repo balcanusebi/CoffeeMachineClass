@@ -1,13 +1,14 @@
-﻿using CoffeeMachineSimulator.Services.Enums;
+﻿using CoffeeMachineSimulator.Data.Entities;
+using CoffeeMachineSimulator.Services.Enums;
 using CoffeeMachineSimulator.Services.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CoffeeMachineSimulator.Services.Interfaces
 {
     public interface IEspressoMachineService
     {
-        CoffeeModel GiveMeACoffee(SweetnessEnum sweetness);
-        float GetSumOfAllCoffees();
-        List<CoffeeModel> MakeAllCoffeesWithSweetness(SweetnessEnum sweetness);
+        void AddEspressoMachine(EspressoMachineEntity espressoMachine);
+        Task<EspressoMachineEntity> GetEspressoMachine(bool isEspressoMachine);
     }
 }

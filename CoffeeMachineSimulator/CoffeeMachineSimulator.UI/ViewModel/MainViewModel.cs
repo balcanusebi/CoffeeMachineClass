@@ -142,7 +142,15 @@ namespace CoffeeMachineSimulator.UI.ViewModel
             var data = CreateCoffeeMachineData(nameof(CounterCappuccino), CounterCappuccino);
             await SendDataAsync(data);
 
-            coffeeService.AddCoffee(new CoffeeModel { Name = data.City + " cofee" });
+            var coffeeModelToAdd = new CoffeeModel
+            {
+                IsEsspreso = false,
+                Name = "Normal Coffee",
+                Sweetness = Services.Enums.SweetnessEnum.Sweet,
+                Price = 20
+            };
+
+            await coffeeService.AddCoffee(coffeeModelToAdd);
         }
 
         private async void MakeEspresso()
@@ -150,6 +158,16 @@ namespace CoffeeMachineSimulator.UI.ViewModel
             CounterEspresso++;
             var data = CreateCoffeeMachineData(nameof(CounterEspresso), CounterEspresso);
             await SendDataAsync(data);
+
+            var coffeeModelToAdd = new CoffeeModel
+            {
+                IsEsspreso = true,
+                Name = "Espresso",
+                Sweetness = Services.Enums.SweetnessEnum.Bitter,
+                Price = 15
+            };
+
+            await coffeeService.AddCoffee(coffeeModelToAdd);
         }
 
         private CoffeeMachineData CreateCoffeeMachineData(string sensorType, int sensorValue)

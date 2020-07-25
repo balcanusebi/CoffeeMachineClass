@@ -3,76 +3,60 @@ using CoffeeMachineSimulator.Data;
 using CoffeeMachineSimulator.Data.Entities;
 using CoffeeMachineSimulator.Services.Interfaces;
 using CoffeeMachineSimulator.Services.Models;
-using FizzWare.NBuilder;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace CoffeeMachineSimulator.Services.Services
 {
     public class CoffeeService : ICoffeeService
     {
-        private readonly List<CoffeeModel> coffeeModels;
-        private readonly string connectionstring = "Server=DESKTOP-FCS0D3H\\SBALCANU;Integrated Security=true; Database=CofeeDb;Trusted_Connection=True;MultipleActiveResultSets=true";
-
         private readonly IMapper mapper;
+        private readonly IEspressoMachineService espressoMachineService;
+        private readonly CoffeeContext context;
 
-        public CoffeeService(IMapper mapper)
+        public CoffeeService(IMapper mapper, IEspressoMachineService espressoMachineService, CoffeeContext context)
         {
             this.mapper = mapper;
-            coffeeModels = Builder<CoffeeModel>.CreateListOfSize(10)
-                .TheFirst(1)
-                .With(x=>x.Name = "Lavazza")
-                .Build()
-                .ToList();
+            this.espressoMachineService = espressoMachineService;
+            this.context = context;
         }
 
-        public void AddCoffee(CoffeeModel coffeeToAdd)
+        public async Task AddCoffee(CoffeeModel coffeeToAdd)
         {
             if (coffeeToAdd == null) throw new Exception("You should not add null entries!");
             if (!IsCoffeeValid(coffeeToAdd)) throw new Exception("The coffee you are trying to add is not valid");
 
-            coffeeModels.Add(coffeeToAdd);
-            SaveCoffeeToDb(coffeeToAdd);
+            var coffeeEntityToAdd = mapper.Map<CoffeeEntity>(coffeeToAdd);
+            coffeeEntityToAdd.EspressoMachine = await espressoMachineService.GetEspressoMachine(coffeeToAdd.IsEsspreso);
+
+            await context.Coffees.AddAsync(coffeeEntityToAdd);
+            await context.SaveChangesAsync();
         }
 
-        public void DeleteCoffee(Guid coffeeId)
+        public async Task DeleteCoffee(Guid coffeeId)
         {
             if(coffeeId == Guid.Empty || coffeeId == null) throw new Exception("Please provide an ID!");
 
-            var coffeeFromList = coffeeModels.FirstOrDefault(x => x.Id == coffeeId);
-            if (coffeeFromList == null) throw new Exception("The coffee you are trying to delete does not exist!");
+            var coffeeFromDb = await context.Coffees.FirstOrDefaultAsync(x => x.Id == coffeeId);
+            if (coffeeFromDb == null) throw new Exception("The coffee you are trying to delete does not exist!");
 
-            coffeeModels.Remove(coffeeFromList);
+            context.Coffees.Remove(coffeeFromDb);
+
+            await context.SaveChangesAsync();
         }
 
-        public List<CoffeeModel> GetCoffees()
+        public async Task<List<CoffeeModel>> GetCoffees()
         {
-            return coffeeModels;
+            var coffeeEntities = await context.Coffees.ToListAsync();
+
+            return mapper.Map<List<CoffeeModel>>(coffeeEntities);
         }
 
         private bool IsCoffeeValid(CoffeeModel model)
         {
-            return model.Id != Guid.Empty && !string.IsNullOrEmpty(model.Name) && model.Price != 0.0f;
-        }
-
-        private void SaveCoffeeToDb(CoffeeModel coffeeModel)
-        {
-            var coffeeEntityToAdd = mapper.Map<CoffeeEntity>(coffeeModel);
-
-            var optionsBuilder = new DbContextOptionsBuilder<CoffeeContext>();
-            optionsBuilder.UseSqlServer(connectionstring);
-
-            CoffeeContext dbContext = new CoffeeContext(optionsBuilder.Options);
-
-            dbContext.Coffees.Add(coffeeEntityToAdd);
-            dbContext.Coffees.Remove(coffeeEntityToAdd);
-            var entityFromDb = dbContext.Coffees.FirstOrDefault(x => x.Id == Guid.NewGuid());
-
-            entityFromDb.Name = "My new name";
-
-            dbContext.SaveChanges();
+            return !string.IsNullOrEmpty(model.Name) && model.Price != 0.0f;
         }
     }
 }

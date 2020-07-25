@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using CoffeeMachineSimulator.Data;
+﻿using CoffeeMachineSimulator.Services.Interfaces;
 using CoffeeMachineSimulator.Services.Models;
 using CoffeeMachineSimulator.Services.Services;
 using FizzWare.NBuilder;
@@ -8,29 +7,29 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CoffeeMachineSimulator.Tests.Services
 {
     [TestFixture]
-    public class CoffeeServiceTests
+    public class CoffeeServiceTests : ServiceSetUp
     {
-        //private Mock<ICoffeeContext> coffeeContextMock;
-        private Mock<IMapper> mapperMock;
+        private Mock<IEspressoMachineService> espressoMachineMock;
         private CoffeeService coffeeService;
+
+        public CoffeeServiceTests() : base() {}
 
         [SetUp]
         public void SetUp()
         {
-            //coffeeContextMock = new Mock<ICoffeeContext>();
-            mapperMock = new Mock<IMapper>();
-
-            coffeeService = new CoffeeService(mapperMock.Object);
+            espressoMachineMock = new Mock<IEspressoMachineService>();
+            coffeeService = new CoffeeService(Mapper, espressoMachineMock.Object, Context);
         }
 
         [Test]
-        public void GetCoffees_Returns_ListOfCoffeeModels()
+        public async Task GetCoffees_Returns_ListOfCoffeeModels()
         {
-            var coffeesReturned = coffeeService.GetCoffees();
+            var coffeesReturned = await coffeeService.GetCoffees();
 
             Assert.IsNotNull(coffeesReturned);
             Assert.IsTrue(coffeesReturned.Any());
@@ -41,7 +40,7 @@ namespace CoffeeMachineSimulator.Tests.Services
         [Test]
         public void AddNullCoffee_Throws_NewException()
         {
-            var ex = Assert.Throws<Exception>(() => coffeeService.AddCoffee(null));
+            var ex = Assert.ThrowsAsync<Exception>(() => coffeeService.AddCoffee(null));
             
             Assert.AreEqual(ex.Message, "You should not add null entries!");
         }
@@ -55,7 +54,7 @@ namespace CoffeeMachineSimulator.Tests.Services
                                 .With(x=>x.Price = 0.0f)
                                 .Build();
 
-            var ex = Assert.Throws<Exception>(() => coffeeService.AddCoffee(coffeeToAdd));
+            var ex = Assert.ThrowsAsync<Exception>(() => coffeeService.AddCoffee(coffeeToAdd));
 
             Assert.AreEqual(ex.Message, "The coffee you are trying to add is not valid");
         }
@@ -63,7 +62,7 @@ namespace CoffeeMachineSimulator.Tests.Services
         [Test]
         public void DeleteCoffeeWithEmptyId_Throws_NewException()
         {
-            var ex = Assert.Throws<Exception>(() => coffeeService.DeleteCoffee(Guid.Empty));
+            var ex = Assert.ThrowsAsync<Exception>(() => coffeeService.DeleteCoffee(Guid.Empty));
 
             Assert.AreEqual(ex.Message, "Please provide an ID!");
         }
@@ -71,20 +70,22 @@ namespace CoffeeMachineSimulator.Tests.Services
         [Test]
         public void DeleteCoffeeWithNonExistingId_Throws_NewException()
         {
-            var ex = Assert.Throws<Exception>(() => coffeeService.DeleteCoffee(Guid.NewGuid()));
+            var ex = Assert.ThrowsAsync<Exception>(() => coffeeService.DeleteCoffee(Guid.NewGuid()));
 
             Assert.AreEqual(ex.Message, "The coffee you are trying to delete does not exist!");
         }
 
         [Test]
-        public void DeleteCoffee_DeletesCoffee()
+        public async Task DeleteCoffee_DeletesCoffee()
         {
-            var initialCountOfCoffees = coffeeService.GetCoffees().Count;
-            var coffeeToRemove = coffeeService.GetCoffees().First();
+            var expectedCountOfCoffees = (await coffeeService.GetCoffees()).Count;
+            var coffeeToRemove = (await coffeeService.GetCoffees()).First();
 
-            coffeeService.DeleteCoffee(coffeeToRemove.Id);
+            await coffeeService.DeleteCoffee(coffeeToRemove.Id);
 
-            Assert.AreNotEqual(initialCountOfCoffees, coffeeService.GetCoffees().Count);
+            var actualCountOfCoffees = (await coffeeService.GetCoffees()).Count;
+
+            Assert.AreNotEqual(expectedCountOfCoffees, actualCountOfCoffees);
         }
     }
 }

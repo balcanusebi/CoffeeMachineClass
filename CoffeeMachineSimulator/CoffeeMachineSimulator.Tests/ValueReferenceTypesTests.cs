@@ -1,10 +1,7 @@
 ﻿using CoffeeMachineSimulator.Services.Models;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace CoffeeMachineSimulator.Tests.Services
+namespace CoffeeMachineSimulator.Tests
 {
     [TestFixture]
     public class ValueReferenceTypesTests
@@ -17,7 +14,7 @@ namespace CoffeeMachineSimulator.Tests.Services
 
             nbToTest = 20;
 
-            Assert.AreEqual(nbToAssign, nbToTest);
+            Assert.AreNotEqual(nbToAssign, nbToTest);
         }
 
         [Test]
@@ -34,6 +31,4 @@ namespace CoffeeMachineSimulator.Tests.Services
             Assert.AreEqual(coffeModel.Name, secondeCoffeeModel.Name);
         }
     }
-
-
 }
