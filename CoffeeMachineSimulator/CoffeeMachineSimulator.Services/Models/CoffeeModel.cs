@@ -10,5 +10,6 @@ namespace CoffeeMachineSimulator.Services.Models
         public SweetnessEnum Sweetness { get; set; }
         public float Price { get; set; }
         public EspressoMachineModel EspressoMachine { get; set; }
+        public bool Filled { get; set; }
     }
 }

@@ -11,6 +11,6 @@ namespace CoffeeMachineSimulator.Services.Interfaces
         void DeleteCoffee(Guid coffeeId);
         void DrinkCoffee(Guid coffeeId); //TODO: add new property in object that marks if the cofee is full or not
         void UpdateCoffee(CoffeeModel coffeeToUpdate);
-        void GetAllCoffeesFromEspressoMachine(Guid espressoMachineId);
+        List<CoffeeModel> GetAllCoffeesFromEspressoMachine(Guid espressoMachineId);
     }
 }
