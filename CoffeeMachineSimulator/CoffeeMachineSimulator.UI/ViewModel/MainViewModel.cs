@@ -25,11 +25,13 @@ namespace CoffeeMachineSimulator.UI.ViewModel
         private ICoffeMachineDataSender _dataSender;
         private ICoffeeService coffeeService;
         private DispatcherTimer _dispatcherTimer;
+        private ICoffeeDataService coffeeDataService;
 
-        public MainViewModel(ICoffeMachineDataSender dataSender, ICoffeeService coffeeService)
+        public MainViewModel(ICoffeMachineDataSender dataSender, ICoffeeService coffeeService, ICoffeeDataService coffeeDataService)
         {
             _dataSender = dataSender;
             this.coffeeService = coffeeService;
+            this.coffeeDataService = coffeeDataService;
             SerialNumber = Guid.NewGuid().ToString().Substring(0, 8);
             MakeCappuccinoCommand = new DelegateCommand(MakeCappucinno);
             MakeEspressoCommand = new DelegateCommand(MakeEspresso);
@@ -141,6 +143,7 @@ namespace CoffeeMachineSimulator.UI.ViewModel
             CounterCappuccino++;
             var data = CreateCoffeeMachineData(nameof(CounterCappuccino), CounterCappuccino);
             await SendDataAsync(data);
+            await coffeeDataService.AddCoffeeData(data);
 
             var coffeeModelToAdd = new CoffeeModel
             {
@@ -158,6 +161,7 @@ namespace CoffeeMachineSimulator.UI.ViewModel
             CounterEspresso++;
             var data = CreateCoffeeMachineData(nameof(CounterEspresso), CounterEspresso);
             await SendDataAsync(data);
+            await coffeeDataService.AddCoffeeData(data);
 
             var coffeeModelToAdd = new CoffeeModel
             {

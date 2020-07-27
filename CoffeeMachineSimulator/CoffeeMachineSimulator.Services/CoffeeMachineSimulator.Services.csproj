@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CoffeeMachineSimulator.Data\CoffeeMachineSimulator.Data.csproj" />
+    <ProjectReference Include="..\CoffeeMachineSimulator.Sender\CoffeeMachineSimulator.Sender.csproj" />
   </ItemGroup>
 
 </Project>
