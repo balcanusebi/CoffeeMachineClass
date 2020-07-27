@@ -7,6 +7,7 @@ namespace CoffeeMachineSimulator.Data
     {
         public DbSet<CoffeeEntity> Coffees { get; set; }
         public DbSet<EspressoMachineEntity> EspressoMachines { get; set; }
+        public DbSet<CoffeeDataEntity> CoffeeDataEntities { get; set; }
 
         public CoffeeContext(DbContextOptions<CoffeeContext> options) : base(options)
         {
@@ -17,6 +18,7 @@ namespace CoffeeMachineSimulator.Data
             base.OnModelCreating(modelBuilder);
             ConfigureCoffeeModel(modelBuilder);
             ConfigureEspressoMachineModel(modelBuilder);
+            ConfigureCoffeeDataModel(modelBuilder);
         }
 
         private static void ConfigureCoffeeModel(ModelBuilder modelBuilder)
@@ -30,6 +32,12 @@ namespace CoffeeMachineSimulator.Data
         {
             var entity = modelBuilder.Entity<EspressoMachineEntity>();
             entity.ToTable("EspressoMachines");
+        }
+
+        private static void ConfigureCoffeeDataModel(ModelBuilder modelBuilder)
+        {
+            var entity = modelBuilder.Entity<CoffeeDataEntity>();
+            entity.ToTable("CoffeeDataEntities");
         }
     }
 }
