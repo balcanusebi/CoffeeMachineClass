@@ -38,7 +38,7 @@ namespace CoffeeMachineSimulator.UI
         private void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<CoffeeContext>
-                (options => options.UseSqlServer("Server=DESKTOP-7BB7L0U\\SQLEXPRESS;Integrated Security=true; Database=CofeeDb;Trusted_Connection=True;MultipleActiveResultSets=true"));
+                (options => options.UseSqlServer("Server=DESKTOP-FCS0D3H\\SBALCANU;Integrated Security=true; Database=CofeeDb;Trusted_Connection=True;MultipleActiveResultSets=true"));
             
             services.AddTransient(typeof(MainWindow));
             services.AddSingleton<MainViewModel>();

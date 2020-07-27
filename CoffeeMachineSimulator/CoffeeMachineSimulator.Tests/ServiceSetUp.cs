@@ -44,6 +44,7 @@ namespace CoffeeMachineSimulator.Tests
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<CoffeeProfile>();
+                cfg.AddProfile<CoffeeDataProfile>();
             });
 
             return new Mapper(config);

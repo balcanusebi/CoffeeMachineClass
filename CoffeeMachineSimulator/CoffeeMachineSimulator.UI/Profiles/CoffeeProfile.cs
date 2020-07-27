@@ -14,6 +14,7 @@ namespace CoffeeMachineSimulator.UI.Profiles
 
             CreateMap<CoffeeEntity, CoffeeModel>()
                 .ForMember(dest => dest.IsEsspreso, opts => opts.Ignore())
+                .ForMember(dest=> dest.EspressoMachine, opts => opts.Ignore())
                 .ForMember(dest => dest.Sweetness, opts => opts.MapFrom(x=>x.Sweetness));
         }
     }
