@@ -1,5 +1,7 @@
 ﻿using CoffeeMachineSimulator.Interfaces.Sender;
 using CoffeeMachineSimulator.Sender.Model.CoffeeMachine.Simulator.Sender.Model;
+using CoffeeMachineSimulator.Services.Interfaces;
+using CoffeeMachineSimulator.Services.Models;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
@@ -21,11 +23,15 @@ namespace CoffeeMachineSimulator.UI.ViewModel
         private int _beanLevel;
         private bool _isSendingPeriodically;
         private ICoffeMachineDataSender _dataSender;
+        private ICoffeeService coffeeService;
         private DispatcherTimer _dispatcherTimer;
+        private ICoffeeDataService coffeeDataService;
 
-        public MainViewModel(ICoffeMachineDataSender dataSender)
+        public MainViewModel(ICoffeMachineDataSender dataSender, ICoffeeService coffeeService, ICoffeeDataService coffeeDataService)
         {
             _dataSender = dataSender;
+            this.coffeeService = coffeeService;
+            this.coffeeDataService = coffeeDataService;
             SerialNumber = Guid.NewGuid().ToString().Substring(0, 8);
             MakeCappuccinoCommand = new DelegateCommand(MakeCappucinno);
             MakeEspressoCommand = new DelegateCommand(MakeEspresso);
@@ -137,6 +143,17 @@ namespace CoffeeMachineSimulator.UI.ViewModel
             CounterCappuccino++;
             var data = CreateCoffeeMachineData(nameof(CounterCappuccino), CounterCappuccino);
             await SendDataAsync(data);
+            await coffeeDataService.AddCoffeeData(data);
+
+            var coffeeModelToAdd = new CoffeeModel
+            {
+                IsEsspreso = false,
+                Name = "Normal Coffee",
+                Sweetness = Services.Enums.SweetnessEnum.Sweet,
+                Price = 20
+            };
+
+            await coffeeService.AddCoffee(coffeeModelToAdd);
         }
 
         private async void MakeEspresso()
@@ -144,6 +161,17 @@ namespace CoffeeMachineSimulator.UI.ViewModel
             CounterEspresso++;
             var data = CreateCoffeeMachineData(nameof(CounterEspresso), CounterEspresso);
             await SendDataAsync(data);
+            await coffeeDataService.AddCoffeeData(data);
+
+            var coffeeModelToAdd = new CoffeeModel
+            {
+                IsEsspreso = true,
+                Name = "Espresso",
+                Sweetness = Services.Enums.SweetnessEnum.Bitter,
+                Price = 15
+            };
+
+            await coffeeService.AddCoffee(coffeeModelToAdd);
         }
 
         private CoffeeMachineData CreateCoffeeMachineData(string sensorType, int sensorValue)

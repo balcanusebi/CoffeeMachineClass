@@ -1,0 +1,9 @@
+﻿using System;
+
+namespace CoffeeMachineSimulator.Data.Entities
+{
+    public class BaseEntity
+    {
+        public Guid Id { get; set; }
+    }
+}

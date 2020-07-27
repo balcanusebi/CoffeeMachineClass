@@ -1,0 +1,9 @@
+C:\Users\SEBASTIANMIHAITABALC\Desktop\CoffeeMachineClass\CoffeeMachineClass\CoffeeMachineSimulator\CoffeeMachineSimulator.Data\bin\Debug\netcoreapp3.1\CoffeeMachineSimulator.Data.deps.json
+C:\Users\SEBASTIANMIHAITABALC\Desktop\CoffeeMachineClass\CoffeeMachineClass\CoffeeMachineSimulator\CoffeeMachineSimulator.Data\bin\Debug\netcoreapp3.1\CoffeeMachineSimulator.Data.dll
+C:\Users\SEBASTIANMIHAITABALC\Desktop\CoffeeMachineClass\CoffeeMachineClass\CoffeeMachineSimulator\CoffeeMachineSimulator.Data\obj\Debug\netcoreapp3.1\CoffeeMachineSimulator.Data.csprojAssemblyReference.cache
+C:\Users\SEBASTIANMIHAITABALC\Desktop\CoffeeMachineClass\CoffeeMachineClass\CoffeeMachineSimulator\CoffeeMachineSimulator.Data\obj\Debug\netcoreapp3.1\CoffeeMachineSimulator.Data.AssemblyInfoInputs.cache
+C:\Users\SEBASTIANMIHAITABALC\Desktop\CoffeeMachineClass\CoffeeMachineClass\CoffeeMachineSimulator\CoffeeMachineSimulator.Data\obj\Debug\netcoreapp3.1\CoffeeMachineSimulator.Data.AssemblyInfo.cs
+C:\Users\SEBASTIANMIHAITABALC\Desktop\CoffeeMachineClass\CoffeeMachineClass\CoffeeMachineSimulator\CoffeeMachineSimulator.Data\bin\Debug\netcoreapp3.1\CoffeeMachineSimulator.Data.pdb
+C:\Users\SEBASTIANMIHAITABALC\Desktop\CoffeeMachineClass\CoffeeMachineClass\CoffeeMachineSimulator\CoffeeMachineSimulator.Data\obj\Debug\netcoreapp3.1\CoffeeMachineSimulator.Data.csproj.CoreCompileInputs.cache
+C:\Users\SEBASTIANMIHAITABALC\Desktop\CoffeeMachineClass\CoffeeMachineClass\CoffeeMachineSimulator\CoffeeMachineSimulator.Data\obj\Debug\netcoreapp3.1\CoffeeMachineSimulator.Data.dll
+C:\Users\SEBASTIANMIHAITABALC\Desktop\CoffeeMachineClass\CoffeeMachineClass\CoffeeMachineSimulator\CoffeeMachineSimulator.Data\obj\Debug\netcoreapp3.1\CoffeeMachineSimulator.Data.pdb
