@@ -39,11 +39,11 @@ namespace CoffeeMachineSimulator.Services.Services
             await coffeeContext.SaveChangesAsync();
         }
 
-        public async Task<List<CoffeeDataEntity>> GetCoffeeDatas()
+        public async Task<List<CoffeeMachineData>> GetCoffeeDatas()
         {
             var coffeeDataEntities = await coffeeContext.CoffeeDataEntities.ToListAsync();
 
-            return mapper.Map<List<CoffeeDataEntity>>(coffeeDataEntities);
+            return mapper.Map<List<CoffeeMachineData>>(coffeeDataEntities);
         }
     }
 }

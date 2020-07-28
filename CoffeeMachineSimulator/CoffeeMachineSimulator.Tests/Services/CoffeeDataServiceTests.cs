@@ -1,4 +1,4 @@
-﻿using CoffeeMachineSimulator.Data.Entities;
+﻿using CoffeeMachineSimulator.Sender.Model.CoffeeMachine.Simulator.Sender.Model;
 using CoffeeMachineSimulator.Services.Services;
 using NUnit.Framework;
 using System;
@@ -44,7 +44,7 @@ namespace CoffeeMachineSimulator.Tests.Services
             var coffeeDatasReturned = await coffeeDataService.GetCoffeeDatas();
 
             Assert.IsNotNull(coffeeDatasReturned);
-            Assert.IsInstanceOf(typeof(List<CoffeeDataEntity>), coffeeDatasReturned);
+            Assert.IsInstanceOf(typeof(List<CoffeeMachineData>), coffeeDatasReturned);
         }
     }
 

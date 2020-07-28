@@ -8,7 +8,7 @@ namespace CoffeeMachineSimulator.Services.Interfaces
     public interface ICoffeeDataService
     {
         Task AddCoffeeData(CoffeeMachineData coffeeMachineData);
-        Task<List<CoffeeDataEntity>> GetCoffeeDatas();
+        Task<List<CoffeeMachineData>> GetCoffeeDatas();
         Task DeleteFirstCoffeeData();
     }
 }
