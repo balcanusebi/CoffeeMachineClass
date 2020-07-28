@@ -21,13 +21,13 @@ namespace CoffeeMachineSimulator.Tests.Services
         [Test]
         public async Task DeleteFirstCoffeeData_DeletesCoffeeData()
         {
-            var expectedCountOfCoffees = (await coffeeDataService.GetCoffeeDatas()).Count;
+            var expectedCountOfCoffeeDatas = (await coffeeDataService.GetCoffeeDatas()).Count;
 
             await coffeeDataService.DeleteFirstCoffeeData();
 
-            var actualCountOfCoffees = (await coffeeDataService.GetCoffeeDatas()).Count;
+            var actualCountOfCoffeeDatas = (await coffeeDataService.GetCoffeeDatas()).Count;
 
-            Assert.AreNotEqual(expectedCountOfCoffees, actualCountOfCoffees);
+            Assert.AreNotEqual(expectedCountOfCoffeeDatas, actualCountOfCoffeeDatas);
         }
 
         [Test]
@@ -41,10 +41,10 @@ namespace CoffeeMachineSimulator.Tests.Services
         [Test]
         public async Task GetCoffeeDatas_Returns_ListOfCoffeeDataEntities()
         {
-            var coffeesReturned = await coffeeDataService.GetCoffeeDatas();
+            var coffeeDatasReturned = await coffeeDataService.GetCoffeeDatas();
 
-            Assert.IsNotNull(coffeesReturned);
-            Assert.IsInstanceOf(typeof(List<CoffeeDataEntity>), coffeesReturned);
+            Assert.IsNotNull(coffeeDatasReturned);
+            Assert.IsInstanceOf(typeof(List<CoffeeDataEntity>), coffeeDatasReturned);
         }
     }
 
