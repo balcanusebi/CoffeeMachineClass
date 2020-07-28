@@ -10,8 +10,7 @@ namespace CoffeeMachineSimulator.Tests
 {
     public class ServiceSetUp
     {
-        protected static readonly Guid CoffeeEspressorId = Guid.NewGuid();
-        protected static readonly Guid EspressorEspressorId = Guid.NewGuid();
+        
         protected readonly Mapper Mapper;
         protected CoffeeContext Context { get; private set; }
 
@@ -26,6 +25,8 @@ namespace CoffeeMachineSimulator.Tests
             var options = new DbContextOptionsBuilder<CoffeeContext>()
                     .UseInMemoryDatabase(databaseName: "CoffeeDb")
                     .Options;
+            Guid CoffeeEspressorId = Guid.NewGuid();
+            Guid EspressorEspressorId = Guid.NewGuid();
 
             Context = new CoffeeContext(options);
 
@@ -35,6 +36,9 @@ namespace CoffeeMachineSimulator.Tests
             Context.Coffees.Add(new CoffeeEntity { Name = "First Coffee", Price = 20, Sweetness = Sweetness.Bitter, EspressoMachineId = CoffeeEspressorId });
             Context.Coffees.Add(new CoffeeEntity { Name = "Second Coffee", Price = 30, Sweetness = Sweetness.Sweet, EspressoMachineId = EspressorEspressorId });
             Context.Coffees.Add(new CoffeeEntity { Name = "Third Coffee", Price = 45, Sweetness = Sweetness.LessSweet, EspressoMachineId = EspressorEspressorId });
+
+            Context.CoffeeDataEntities.Add(new CoffeeDataEntity { City = "Brasov", RecordingTime=DateTime.Now, SensorType="Sensor1", SensorValue=1, SerialNumber="12345" });
+            Context.CoffeeDataEntities.Add(new CoffeeDataEntity { City = "Cluj", RecordingTime = DateTime.Now, SensorType = "Sensor2", SensorValue = 2, SerialNumber = "12346" });
 
             Context.SaveChanges();
         }
