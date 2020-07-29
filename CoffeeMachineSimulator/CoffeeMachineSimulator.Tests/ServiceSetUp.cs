@@ -35,6 +35,7 @@ namespace CoffeeMachineSimulator.Tests
             Context.Coffees.Add(new CoffeeEntity { Name = "First Coffee", Price = 20, Sweetness = Sweetness.Bitter, EspressoMachineId = CoffeeEspressorId });
             Context.Coffees.Add(new CoffeeEntity { Name = "Second Coffee", Price = 30, Sweetness = Sweetness.Sweet, EspressoMachineId = EspressorEspressorId });
             Context.Coffees.Add(new CoffeeEntity { Name = "Third Coffee", Price = 45, Sweetness = Sweetness.LessSweet, EspressoMachineId = EspressorEspressorId });
+            Context.EspressoMachines.Add(new EspressoMachineEntity { Name = "MyCoffee" });
 
             Context.SaveChanges();
         }

@@ -16,6 +16,7 @@ namespace CoffeeMachineSimulator.Tests.Services
     {
         private Mock<IEspressoMachineService> espressoMachineMock;
         private CoffeeService coffeeService;
+        private CoffeeDataService coffeeDataService;
 
         public CoffeeServiceTests() : base() {}
 
@@ -24,6 +25,7 @@ namespace CoffeeMachineSimulator.Tests.Services
         {
             espressoMachineMock = new Mock<IEspressoMachineService>();
             coffeeService = new CoffeeService(Mapper, espressoMachineMock.Object, Context);
+            coffeeDataService = new CoffeeDataService(Context,Mapper);
         }
 
         [Test]
@@ -86,6 +88,25 @@ namespace CoffeeMachineSimulator.Tests.Services
             var actualCountOfCoffees = (await coffeeService.GetCoffees()).Count;
 
             Assert.AreNotEqual(expectedCountOfCoffees, actualCountOfCoffees);
+        }
+
+        [Test]
+        public async Task GetEspressoCoffees_ReturnEspressoCoffeesList()
+        {
+            var returnEspressoCoffees = await coffeeDataService.GetEspressoCoffees();
+
+            Assert.IsNotNull(returnEspressoCoffees);
+        }
+
+        [Test]
+        public async Task DeleteFirstEspressoCoffee_ReturnCoffeeDeleted()
+        {
+            var initialCoffeeList = (await coffeeDataService.GetEspressoCoffees()).Count;
+
+            await coffeeDataService.DeleteFirstEspressoCoffee();
+
+            Assert.IsNotNull(initialCoffeeList);
+            Assert.AreNotEqual(initialCoffeeList, (await coffeeDataService.GetEspressoCoffees()).Count);
         }
     }
 }
