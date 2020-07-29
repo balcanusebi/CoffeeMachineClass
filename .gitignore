@@ -15,3 +15,8 @@ CoffeeMachineSimulator/CoffeeMachineSimulator.UI/obj
 /CoffeeMachineSimulator/CoffeeMachineSimulator.Services/obj
 /CoffeeMachineSimulator/CoffeeMachineSimulator.Services/bin/Debug/netcoreapp3.1
 /CoffeeMachineSimulator/CoffeeMachineSimulator.Data/bin/Debug/netcoreapp3.1
+/CoffeeMachineSimulator/CoffeeMachineSimulator.API/bin/Debug/netcoreapp3.1
+/CoffeeMachineSimulator/CoffeeMachineSimulator.API/obj/Debug/netcoreapp3.1
+/CoffeeMachineSimulator/CoffeeMachineSimulator.API/obj
+/CoffeeMachineSimulator/CoffeeMachineSimulator.Receiver/bin/Debug/netcoreapp3.1
+/CoffeeMachineSimulator/CoffeeMachineSimulator.Receiver/obj

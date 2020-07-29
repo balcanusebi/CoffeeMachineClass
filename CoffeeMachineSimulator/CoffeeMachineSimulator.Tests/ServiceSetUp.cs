@@ -10,8 +10,6 @@ namespace CoffeeMachineSimulator.Tests
 {
     public class ServiceSetUp
     {
-        protected static readonly Guid CoffeeEspressorId = Guid.NewGuid();
-        protected static readonly Guid EspressorEspressorId = Guid.NewGuid();
         protected readonly Mapper Mapper;
         protected CoffeeContext Context { get; private set; }
 
@@ -26,6 +24,9 @@ namespace CoffeeMachineSimulator.Tests
             var options = new DbContextOptionsBuilder<CoffeeContext>()
                     .UseInMemoryDatabase(databaseName: "CoffeeDb")
                     .Options;
+
+            Guid CoffeeEspressorId = Guid.NewGuid();
+            Guid EspressorEspressorId = Guid.NewGuid();
 
             Context = new CoffeeContext(options);
 

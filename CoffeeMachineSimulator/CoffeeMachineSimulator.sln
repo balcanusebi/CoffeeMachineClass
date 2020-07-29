@@ -11,7 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoffeeMachineSimulator.Serv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoffeeMachineSimulator.Tests", "CoffeeMachineSimulator.Tests\CoffeeMachineSimulator.Tests.csproj", "{A41C6C52-9EB7-4012-A030-6DC4F87D9C55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoffeeMachineSimulator.Data", "CoffeeMachineSimulator.Data\CoffeeMachineSimulator.Data.csproj", "{C2CE9160-64D3-401E-A8AD-8AF6970B3A8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoffeeMachineSimulator.Data", "CoffeeMachineSimulator.Data\CoffeeMachineSimulator.Data.csproj", "{C2CE9160-64D3-401E-A8AD-8AF6970B3A8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoffeeMachineSimulator.Receiver", "CoffeeMachineSimulator.Receiver\CoffeeMachineSimulator.Receiver.csproj", "{24E74EE0-FEC5-4299-B457-CD3A4651BF83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoffeeMachineSimulator.API", "CoffeeMachineSimulator.API\CoffeeMachineSimulator.API.csproj", "{E47025E0-F384-4A9E-90E9-1E4DBEB39B0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{C2CE9160-64D3-401E-A8AD-8AF6970B3A8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2CE9160-64D3-401E-A8AD-8AF6970B3A8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2CE9160-64D3-401E-A8AD-8AF6970B3A8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24E74EE0-FEC5-4299-B457-CD3A4651BF83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24E74EE0-FEC5-4299-B457-CD3A4651BF83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24E74EE0-FEC5-4299-B457-CD3A4651BF83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24E74EE0-FEC5-4299-B457-CD3A4651BF83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E47025E0-F384-4A9E-90E9-1E4DBEB39B0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E47025E0-F384-4A9E-90E9-1E4DBEB39B0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E47025E0-F384-4A9E-90E9-1E4DBEB39B0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E47025E0-F384-4A9E-90E9-1E4DBEB39B0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
